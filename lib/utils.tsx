@@ -2,29 +2,11 @@ import { ReactNode, createElement, Fragment } from 'react'
 import { PARAGRAPH_BREAK, type DiffOp, type DiffOpType, type Edition } from './types'
 
 /**
- * Convert straight quotation marks to their typographic (curly) equivalents.
- *
- * Algorithm (two-pass):
- *   1. A `"` or `'` that follows whitespace, an em/en dash, an opening bracket,
- *      or appears at the start of the string is an opening quote.
- *   2. Any remaining `"` or `'` is a closing quote or apostrophe.
- *
- * Applied at render time so the stored source text is left unchanged.
- */
-function smartQuotes(text: string): string {
-  return text
-    .replace(/(^|[\s\u2014\u2013\u2012([\-])"/, '$1\u201c')  // opening "
-    .replace(/"/g, '\u201d')                                    // closing "
-    .replace(/(^|[\s\u2014\u2013\u2012([\-])'/, "$1\u2018")   // opening '
-    .replace(/'/g, '\u2019')                                    // closing ' / apostrophe
-}
-
-/**
  * Converts *italic* markdown spans in a string to <em> elements.
  * Everything else is returned as plain text.
  */
 export function renderText(text: string): ReactNode {
-  const processed = smartQuotes(text)
+  const processed = text
   const parts = processed.split(/(\*[^*]+\*)/)
   if (parts.length === 1) return processed
   return createElement(
@@ -99,7 +81,7 @@ export function renderDiffBlocks(ops: DiffOp[]): DiffBlock[] {
         continue
       }
 
-      const parts = smartQuotes(piece).split('*')
+      const parts = piece.split('*')
 
       for (let i = 0; i < parts.length; i++) {
         // Every split point represents a `*` we crossed — toggle italic state(s)
