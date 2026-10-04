@@ -47,7 +47,7 @@ export default function SiteHeader({ mode, activeSlug, activeEdition = '1831' }:
               ].join(' ')}
             >
               <GitCompare size={14} />
-              <span className="hidden sm:inline">Compare editions</span>
+              <span className="hidden sm:inline">Diff</span>
             </Link>
           </nav>
           <ThemeToggle />

@@ -64,7 +64,7 @@ export default function HomepageContent({ structure, initialEdition }: HomepageC
             className="inline-flex items-center gap-2 px-4 py-2.5 bg-subtle text-fg rounded-md font-sans text-sm font-medium hover:bg-border transition-colors"
           >
             <GitCompare size={15} />
-            Explore differences
+            Read the diff
           </Link>
         </div>
 
