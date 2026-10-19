@@ -2,21 +2,27 @@ import { ReactNode, createElement, Fragment } from 'react'
 import { PARAGRAPH_BREAK, type DiffOp, type DiffOpType, type Edition } from './types'
 
 /**
+ * In the source text `\*` is a literal asterisk (a footnote mark, or the
+ * "* * *" standing in for a name); every other `*` delimits italics.
+ */
+const ITALIC_MARK = /(?<!\\)\*/
+const unescapeStars = (text: string) => text.replaceAll('\\*', '*')
+
+/**
  * Converts *italic* markdown spans in a string to <em> elements.
  * Everything else is returned as plain text.
  */
 export function renderText(text: string): ReactNode {
-  const processed = text
-  const parts = processed.split(/(\*[^*]+\*)/)
-  if (parts.length === 1) return processed
+  const parts = text.split(/((?<!\\)\*(?:\\\*|[^*])+?(?<!\\)\*)/)
+  if (parts.length === 1) return unescapeStars(text)
   return createElement(
     Fragment,
     null,
     ...parts.map((part, i) => {
-      if (part.startsWith('*') && part.endsWith('*') && part.length > 2) {
-        return createElement('em', { key: i }, part.slice(1, -1))
+      if (i % 2 === 1) {
+        return createElement('em', { key: i }, unescapeStars(part.slice(1, -1)))
       }
-      return part || null
+      return unescapeStars(part) || null
     }),
   )
 }
@@ -42,7 +48,8 @@ export interface DiffBlock {
  *
  * Two italic cursors (one per edition) are tracked independently. A `*` in an
  * `equal` op toggles both; a `*` in a `delete` op toggles only 1818; a `*` in
- * an `insert` op toggles only 1831. The `*` character is never rendered.
+ * an `insert` op toggles only 1831. The `*` character is never rendered; an
+ * escaped `\*` is a literal asterisk and toggles nothing.
  *
  * When italic status differs between editions on an equal-op segment, the text
  * is emitted as a del/ins pair — consistent with how content changes are shown:
@@ -81,7 +88,7 @@ export function renderDiffBlocks(ops: DiffOp[]): DiffBlock[] {
         continue
       }
 
-      const parts = piece.split('*')
+      const parts = piece.split(ITALIC_MARK)
 
       for (let i = 0; i < parts.length; i++) {
         // Every split point represents a `*` we crossed — toggle italic state(s)
@@ -91,7 +98,7 @@ export function renderDiffBlocks(ops: DiffOp[]): DiffBlock[] {
           else                            { i1831 = !i1831 }
         }
 
-        const text = parts[i]
+        const text = unescapeStars(parts[i])
         if (!text) continue
 
         if (op.type === 'equal') {

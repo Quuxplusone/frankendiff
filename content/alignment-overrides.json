@@ -87,11 +87,6 @@
       "note": "1831 Ch9: 1831 inserted 'Sometimes I could cope with the sullen despair...' with no 1818 counterpart"
     },
     {
-      "1818": "v2-3/10",
-      "1831": null,
-      "note": "1818 Ch11 printing error: 'overcome by fatigue, I lay down...' was a stray sentence fragment on its own line; 1831 correctly merged it into the preceding paragraph"
-    },
-    {
       "1818": null,
       "1831": "16/36",
       "note": "1831 Ch16: inserted 'The sleeper stirred; a thrill of terror ran through me...' with no 1818 counterpart"
@@ -102,6 +97,11 @@
       "note": "1818 Ch18: '\"I am content,\" I replied...' was cut from 1831 (absorbed into surrounding narrative)"
     },
     {
+      "1818": "v3-1/21",
+      "1831": null,
+      "note": "1818 Ch18: the footnote ‘Leigh Hunt’s “Rimini.”’ was dropped from 1831"
+    },
+    {
       "1818": "v3-4/47",
       "1831": null,
       "note": "1818 Ch21: 'I remember, as I quitted the prison...' has no 1831 counterpart"
@@ -110,16 +110,6 @@
       "1818": "v3-5/10",
       "1831": null,
       "note": "1818 Ch22: letter header '\"*To* Victor Frankenstein.' has no 1831 counterpart"
-    },
-    {
-      "1818": "v3-5/26",
-      "1831": null,
-      "note": "1818 Ch22: 'Soon after my arrival my father spoke of my immediate marriage...' was cut from 1831"
-    },
-    {
-      "1818": null,
-      "1831": "23/22",
-      "note": "1831 Ch23: 'My manner, as I thus addressed him, was impressive...' inserted with no 1818 counterpart"
     },
     {
       "1818": "cover/2",

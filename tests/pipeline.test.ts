@@ -81,6 +81,16 @@ test('every later section of a diff unit is marked where it begins', () => {
   }
 })
 
+test('every paragraph opens and closes its italics; a literal asterisk is written \\*', () => {
+  for (const edition of EDITIONS) {
+    for (const p of book.paragraphsByEdition[edition]!) {
+      const marks = p.text.match(/(?<!\\)\*/g) ?? []
+      assert.equal(marks.length % 2, 0, `${p.id}: unpaired italic mark (escape a literal asterisk as \\*)`)
+      assert.doesNotMatch(p.text, /\\(?!\*)/, `${p.id}: a backslash may only escape an asterisk`)
+    }
+  }
+})
+
 test('every paired row diff reproduces both row texts exactly', () => {
   let pairs = 0
   for (const [slug, groups] of book.chapters) {
