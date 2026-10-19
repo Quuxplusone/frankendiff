@@ -127,7 +127,7 @@ export default function AboutPage() {
           </p>
 
           <p>
-          If you notice an error in the text, a misaligned paragraph, or anything else worth fixing —or if you simply have something to share— you are welcome to write to{' '}
+          If you notice an error in the text, a misaligned paragraph, or anything else worth fixing — or if you simply have something to share — you are welcome to write to{' '}
           {/* Email encoded as HTML entities — browsers decode them, most address harvesters do not */}
           <span dangerouslySetInnerHTML={{__html: '<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#101;&#108;&#108;&#111;&#64;&#102;&#114;&#97;&#110;&#107;&#101;&#110;&#100;&#105;&#102;&#102;&#46;&#99;&#111;&#109;" class="underline underline-offset-4 decoration-1 hover:text-muted transition-colors">&#104;&#101;&#108;&#108;&#111;&#64;&#102;&#114;&#97;&#110;&#107;&#101;&#110;&#100;&#105;&#102;&#102;&#46;&#99;&#111;&#109;</a>'}} />.
           </p>
