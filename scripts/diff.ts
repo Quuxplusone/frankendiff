@@ -40,12 +40,14 @@ import { DiffOp, DiffOpType } from '../lib/types'
 /**
  * Split text into fine-grained tokens: words (with apostrophes for
  * contractions), individual punctuation characters, and whitespace runs.
+ * An escaped asterisk `\*` (a literal asterisk, see lib/utils.tsx) is one
+ * token, so the diff never separates it from its backslash.
  *
  * Splitting punctuation from words means a change like "excellent," → "excellent"
  * will only highlight the comma rather than the entire word.
  */
 function tokenize(text: string): string[] {
-  return text.match(/\w+(?:'\w+)*|[^\w\s]|\s+/g) ?? []
+  return text.match(/\\\*|\w+(?:['’]\w+)*|[^\w\s]|\s+/g) ?? []
 }
 
 /** Lower-cased words of a text, for similarity measures. */
@@ -64,7 +66,7 @@ function words(text: string): string[] {
  */
 function tokenWeight(token: string): number {
   if (/^\s+$/.test(token)) return 1
-  if (/^[^\w\s]$/.test(token)) return 50
+  if (/^(?:[^\w\s]|\\\*)$/.test(token)) return 50
   return 100
 }
 

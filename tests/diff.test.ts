@@ -64,6 +64,25 @@ test('never produces empty or adjacent same-type ops', () => {
   }
 })
 
+test('a word with a curly apostrophe is one token, like one with a straight apostrophe', () => {
+  const ops = assertRoundTrip('my father’s house', 'my brother’s house')
+  assert.deepEqual(ops, [
+    { type: 'equal', text: 'my ' },
+    { type: 'delete', text: 'father’s' },
+    { type: 'insert', text: 'brother’s' },
+    { type: 'equal', text: ' house' },
+  ])
+})
+
+test('an escaped asterisk stays with its backslash', () => {
+  const ops = assertRoundTrip('from the eye\\*.', 'from the eye.')
+  assert.deepEqual(ops, [
+    { type: 'equal', text: 'from the eye' },
+    { type: 'delete', text: '\\*' },
+    { type: 'equal', text: '.' },
+  ])
+})
+
 // ── Clause splitting ────────────────────────────────────────────────────────
 
 import { splitClauses } from '../scripts/diff'
